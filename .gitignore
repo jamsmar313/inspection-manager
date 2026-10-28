@@ -1,0 +1,52 @@
+
+
+# Google Calendar credentials
+google_credentials.json
+google_token.json
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Inspection databases
+*.sqlite3
+*.sqlite3-*
+*.sqlite3.*
+
+# Backups
+backups/
+*.bak
+*.backup
+*.before_*
+
+# Python environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Generated static files
+staticfiles/
+
+# Editor and system files
+.vscode/
+.idea/
+.DS_Store
+
+
+##google_credentials.json
+##google_token.json
+
+# Development backups
+*.save
+*.working_backup
+viewsold.py
+
+# Inspection spreadsheets and exports
+*.xlsx
+*.xls
+*.csv
+
+# Unused template backups
+worklistx.html

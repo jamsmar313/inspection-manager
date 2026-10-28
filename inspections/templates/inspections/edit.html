@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit inspection {{ job.job_number }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<main class="container py-4" style="max-width: 920px">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Edit inspection {{ job.job_number }}</h1>
+    <a class="btn btn-outline-secondary" href="{% url 'job_detail' job.pk %}">Cancel</a>
+  </div>
+
+  <form method="post" class="bg-white rounded shadow-sm p-4">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="row g-3">
+      {% for field in form %}
+        <div class="col-md-6">
+          {% if field.name == 'status' %}
+            <label class="form-label" for="id_status">Inspection Status</label>
+            <select class="form-select" name="status" id="id_status">
+              <option value="New" {% if job.status == 'New' %}selected{% endif %}>New</option>
+              <option value="Call #1" {% if job.status == 'Call #1' %}selected{% endif %}>Call #1</option>
+              <option value="Call #2" {% if job.status == 'Call #2' %}selected{% endif %}>Call #2</option>
+              <option value="Agent Call" {% if job.status == 'Agent Call' %}selected{% endif %}>Agent Call</option>
+              <option value="Scheduled" {% if job.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+              <option value="Submitted" {% if job.status == 'Submitted' %}selected{% endif %}>Submitted</option>
+              <option value="Paid" {% if job.status == 'Paid' %}selected{% endif %}>Paid</option>
+              <option value="Cancelled" {% if job.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+          {% elif field.field.widget.input_type == 'checkbox' %}
+            <div class="form-check mt-4">
+              {{ field }}
+              <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+          {% else %}
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+          {% endif %}
+          {% for error in field.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a class="btn btn-outline-secondary" href="{% url 'job_detail' job.pk %}">Cancel</a>
+    </div>
+  </form>
+</main>
+</body>
+</html>

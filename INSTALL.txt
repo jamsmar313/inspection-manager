@@ -1,0 +1,27 @@
+INSPECTION MANAGER — IMPORT CASES UPDATE
+
+1. Stop Django (Ctrl+C). Back up db.sqlite3 and your existing project files.
+2. Copy inspections/views.py from this package to your project's inspections/views.py.
+3. Copy config_urls.py from this package to your project's config/urls.py.
+4. Copy the two HTML files to inspections/templates/inspections/ in your project.
+   If you already have dashboard.html in another template directory, replace the active one instead.
+5. In your activated virtual environment run:
+      pip install openpyxl
+6. Run:
+      python manage.py check
+      python manage.py runserver
+7. Open http://127.0.0.1:8000/ and click Import Cases.
+8. Select your company and upload Working Master test.xlsx.
+
+IMPORTANT: Your account must have an Owner or Administrator Membership for the company.
+If you do not see the button, check that you have a membership and that Django is using the updated dashboard.html.
+
+IMPORT BEHAVIOR:
+- Reads the Assignments sheet; headings row 2, data row 3 onward.
+- Skips SAMPLE- jobs and empty Job numbers.
+- Imports only NEW jobs. Existing cases are left untouched (including fees and statuses).
+- First occurrence of a Job # in the workbook wins; later duplicates are skipped.
+- Dates, scheduling, fees, notes and status are mapped to the existing Inspection model.
+- Upload limit 10 MB; .xlsx only.
+- This is a direct import, not a preview/approval workflow. Back up the database first.
+- The company selected is YOUR software account, not the vendor named in the workbook's Inspection Company column.
